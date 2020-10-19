@@ -1,18 +1,29 @@
 on:
   push:
 
+  workflow_dispatch:
+    inputs:
+      token:
+        description: 'Token to use when publishing image'     
+        required: true
+        default: ${{ github.token }}
+      image:
+        description: 'The  image name to publish'     
+        required: true
+        default: ghost-images
+
 jobs:
   build:
     runs-on: ubuntu-latest
 
     env:
-      IMAGE: docker.pkg.github.com/${{ github.repository }}/ghost-images
+      IMAGE: docker.pkg.github.com/${{ github.repository }}/${{ github.event.inputs.image }}
 
     steps:
       - run: docker pull alpine
 
       - run: docker tag alpine ${{ env.IMAGE }}
 
-      - run: docker login https://docker.pkg.github.com -u token -p ${{ secrets.WRITE_PACKAGES_TOKEN }}
+      - run: docker login https://docker.pkg.github.com -u token -p ${{ github.event.inputs.token }}
 
       - run: docker push ${{ env.IMAGE }}

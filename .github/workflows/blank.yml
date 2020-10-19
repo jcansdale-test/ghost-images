@@ -6,7 +6,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      IMAGE: docker.pkg.github.com/${{ githib.repository }}/ghost-images
+      IMAGE: docker.pkg.github.com/${{ github.repository }}/ghost-images
 
     steps:
       - run: docker pull alpine

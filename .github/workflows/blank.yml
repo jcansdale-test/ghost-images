@@ -1,0 +1,16 @@
+on:
+  push:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    env:
+      IMAGE: docker.pkg.github.com/${{ githib.repository }}/ghost-images
+
+    steps:
+      - run: docker pull alpine
+
+      - run: docker tag alpine ${{ env.IMAGE }}
+
+      - run: docker publish ${{ env.IMAGE }}

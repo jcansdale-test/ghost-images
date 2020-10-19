@@ -6,7 +6,6 @@ on:
       token:
         description: 'Token to use when publishing image'     
         required: true
-        default: ${{ github.token }}
       image:
         description: 'The  image name to publish'     
         required: true
